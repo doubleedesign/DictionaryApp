@@ -1,6 +1,8 @@
 import React from 'react';
-import { Header, Paragraph, List, ListItem } from 'grape-ui-react';
+import { Header, List, ListItem } from 'grape-ui-react';
+import InlineList from '../ui/InlineList/InlineList';
 import { DefinitionCard, DefinitionCardContent } from './Definition.style';
+import { GrHistory } from "react-icons/gr";
 
 export interface DefinitionProps {
 	word: string,
@@ -16,14 +18,27 @@ export const Definition: React.FC<DefinitionProps> = function(props: {
 	definitions: string[]
 }) {
 
+	const DateOutput = () => {
+		return (
+			<React.Fragment>
+				<GrHistory/>
+				{props.date}
+			</React.Fragment>
+		)
+	}
+
 	return (
+
 		<DefinitionCard>
 			<DefinitionCardContent>
-				<Header>{props.word}</Header>
-				<Paragraph>{props.type} {props.date ? props.date : null}</Paragraph>
+				<Header sm>{props.word}</Header>
+				<InlineList>
+					<ListItem sm>{props.type}</ListItem>
+					{props.date ?  <ListItem sm><DateOutput/></ListItem>  : null}
+				</InlineList>
 				<List.ol>
 					{props.definitions.map((definition, index) => (
-						<ListItem key={index}>{definition}</ListItem>
+						<ListItem key={index} sm>{definition}</ListItem>
 					))}
 				</List.ol>
 			</DefinitionCardContent>

@@ -41,7 +41,6 @@ export const Search: React.FC<SearchProps> = function(props: {
 
 		return axios.get(query)
 			.then(response => {
-				console.log(response.data);
 				return response.data;
 			}).catch(error => {
 				console.log(error);
