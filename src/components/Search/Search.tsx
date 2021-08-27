@@ -41,6 +41,7 @@ export const Search: React.FC<SearchProps> = function(props: {
 
 		return axios.get(query)
 			.then(response => {
+				console.log(response.data);
 				return response.data;
 			}).catch(error => {
 				console.log(error);
@@ -54,7 +55,7 @@ export const Search: React.FC<SearchProps> = function(props: {
 					<Definition key={index}
 								word={definition.hwi.hw}
 								type={definition.fl}
-								date={(definition.date).split('{')[0]}
+								date={definition.date ? (definition.date).split('{')[0] : null}
 								definitions={definition.shortdef}/>
 				))}
 			</React.Fragment>
