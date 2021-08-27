@@ -3,7 +3,9 @@ import axios from 'axios';
 import { ThemeProvider } from 'styled-components';
 import { styledHelpers, TextField, Button } from 'grape-ui-react';
 import { SearchForm } from './Search.style';
-import { CgSearch } from "react-icons/cg";
+import { CgSearch } from 'react-icons/cg';
+import ResultList from '../ResultList/ResultList';
+import Definition from '../Definition/Definition';
 
 const theme = {
 	buttons: {
@@ -12,7 +14,6 @@ const theme = {
 };
 
 export interface SearchProps {
-
 }
 
 export const Search: React.FC<SearchProps> = function(props: {
@@ -20,6 +21,7 @@ export const Search: React.FC<SearchProps> = function(props: {
 	}) {
 	const [searchTerm, setSearchTerm] = useState<string>('');
 	const apiKeyDict = '16a63a57-7277-4843-8034-4285a3b986ee';
+	//const apiKeyThes = '0803c54f-d908-4630-86a1-0e31e656d692';
 	const [definitions, setDefinitions] = useState<any[]>([]);
 
 	function updateSearchTerm(event: React.ChangeEvent<HTMLInputElement>) {
@@ -45,12 +47,29 @@ export const Search: React.FC<SearchProps> = function(props: {
 			})
 	}
 
+	const Output = () => {
+		return (
+			<React.Fragment>
+				{definitions.map((definition, index) => (
+					<Definition key={index}
+								word={definition.hwi.hw}
+								type={definition.fl}
+								date={(definition.date).split('{')[0]}
+								definitions={definition.shortdef}/>
+				))}
+			</React.Fragment>
+		)
+	}
+
 	return (
 		<ThemeProvider theme={theme}>
 			<SearchForm onSubmit={handleSearch}>
 				<TextField labelText="Search for:" placeholder="Enter search term" autoFocus={true} onChange={updateSearchTerm} />
 				<Button variant="dark" onClick={handleSearch}><CgSearch/></Button>
 			</SearchForm>
+			<ResultList>
+				{definitions ? <Output/> : null}
+			</ResultList>
 		</ThemeProvider>
 	)
 }
