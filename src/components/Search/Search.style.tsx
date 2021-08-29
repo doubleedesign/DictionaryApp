@@ -5,7 +5,7 @@ const theme = getGlobalStyles();
 
 export const SearchForm = styled(Form)`
 	max-width: 600px;
-	margin: 2rem auto;
+	margin: 2rem auto 1rem auto;
 	position: relative;
 	
 	${Button} {

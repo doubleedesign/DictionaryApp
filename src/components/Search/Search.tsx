@@ -6,6 +6,7 @@ import { SearchForm } from './Search.style';
 import { CgSearch } from 'react-icons/cg';
 import ResultList from '../ResultList/ResultList';
 import Definition from '../Definition/Definition';
+import 'pure-react-carousel/dist/react-carousel.es.css';
 
 const theme = {
 	buttons: {
@@ -47,29 +48,23 @@ export const Search: React.FC<SearchProps> = function(props: {
 			})
 	}
 
-	const Output = () => {
-		return (
-			<React.Fragment>
-				{definitions.map((definition, index) => (
-					<Definition key={index}
-								word={definition.hwi.hw}
-								type={definition.fl}
-								date={definition.date ? (definition.date).split('{')[0] : null}
-								definitions={definition.shortdef}/>
-				))}
-			</React.Fragment>
-		)
-	}
-
 	return (
 		<ThemeProvider theme={theme}>
 			<SearchForm onSubmit={handleSearch}>
 				<TextField labelText="Search for:" placeholder="Enter search term" autoFocus={true} onChange={updateSearchTerm} />
 				<Button variant="dark" onClick={handleSearch}><CgSearch/></Button>
 			</SearchForm>
-			<ResultList>
-				{definitions ? <Output/> : null}
-			</ResultList>
+			{definitions ?
+				<ResultList>
+					{definitions.map((definition, index) => (
+						<Definition key={index}
+									word={definition.hwi.hw}
+									type={definition.fl}
+									date={definition.date ? (definition.date).split('{')[0] : null}
+									definitions={definition.shortdef}/>
+					))}
+				</ResultList>
+			: null }
 		</ThemeProvider>
 	)
 }

@@ -28,7 +28,6 @@ export const Definition: React.FC<DefinitionProps> = function(props: {
 	}
 
 	return (
-
 		<DefinitionCard>
 			<DefinitionCardContent>
 				<Header sm>{props.word}</Header>

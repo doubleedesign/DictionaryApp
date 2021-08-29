@@ -1,10 +1,10 @@
 import styled from 'styled-components';
 import { Card, getGlobalStyles, Header, List } from "grape-ui-react";
-
 const theme = getGlobalStyles();
-console.log(theme);
+//console.log(theme);
 
 export const DefinitionCard = styled.article`
+	width: 100%;
 `;
 
 export const DefinitionCardContent = styled(Card)`

@@ -1,6 +1,5 @@
 import styled from 'styled-components';
 import { ListItem } from 'grape-ui-react';
-import { GrHistory } from "react-icons/gr";
 
 export const InlineListContainer = styled.ul`
 	padding: 0;
