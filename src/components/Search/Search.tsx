@@ -55,7 +55,7 @@ export const Search: React.FC<SearchProps> = function(props: {
 				<TextField labelText="Search for:" placeholder="Enter search term" autoFocus={true} onChange={updateSearchTerm} />
 				<Button variant="dark" onClick={handleSearch}><CgSearch/></Button>
 			</SearchForm>
-			{definitions && (typeof definitions[0] == 'object') ?
+			{searchTerm && definitions && (typeof definitions[0] == 'object') ?
 				<ResultList>
 					{definitions.map((definition, index) => (
 						<Definition key={index}
@@ -65,7 +65,16 @@ export const Search: React.FC<SearchProps> = function(props: {
 									definitions={definition.shortdef}/>
 					))}
 				</ResultList>
-				: <Message color="brandDanger" text="Nothing found"/> }
+				: null
+			}
+			{ searchTerm && (!definitions || typeof definitions[0] !== 'object') ?
+				<Message color="brandDanger" text="Nothing found"/>
+				: null
+			}
+			{ !searchTerm ?
+				<Message color="brandSuccess" text="Please enter a search term"/>
+				: null
+			}
 		</ThemeProvider>
 	)
 }
