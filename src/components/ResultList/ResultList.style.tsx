@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import {getGlobalStyles} from "grape-ui-react";
 const theme = getGlobalStyles();
 
-console.log(theme);
+//console.log(theme);
 
 export const ResultListContainer = styled.section`
 	max-width: 37.5rem;

@@ -6,6 +6,7 @@ import { SearchForm } from './Search.style';
 import { CgSearch } from 'react-icons/cg';
 import ResultList from '../ResultList/ResultList';
 import Definition from '../Definition/Definition';
+import Message from '../Message/Message';
 import 'pure-react-carousel/dist/react-carousel.es.css';
 
 const theme = {
@@ -54,7 +55,7 @@ export const Search: React.FC<SearchProps> = function(props: {
 				<TextField labelText="Search for:" placeholder="Enter search term" autoFocus={true} onChange={updateSearchTerm} />
 				<Button variant="dark" onClick={handleSearch}><CgSearch/></Button>
 			</SearchForm>
-			{definitions ?
+			{definitions && (typeof definitions[0] == 'object') ?
 				<ResultList>
 					{definitions.map((definition, index) => (
 						<Definition key={index}
@@ -64,7 +65,7 @@ export const Search: React.FC<SearchProps> = function(props: {
 									definitions={definition.shortdef}/>
 					))}
 				</ResultList>
-			: null }
+				: <Message color="brandDanger" text="Nothing found"/> }
 		</ThemeProvider>
 	)
 }
