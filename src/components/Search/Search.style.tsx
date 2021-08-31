@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Form, Button, getGlobalStyles } from "grape-ui-react";
+import { Form, Button, getGlobalStyles, Progress } from "grape-ui-react";
 
 const theme = getGlobalStyles();
 
@@ -7,6 +7,13 @@ export const SearchForm = styled(Form)`
 	max-width: 600px;
 	margin: 2rem auto 1rem auto;
 	position: relative;
+	
+	${Progress} {
+		position: absolute;
+		bottom: 17px;
+		left: 1px;
+		right: 1px;
+	}
 	
 	${Button} {
 		position: absolute;
