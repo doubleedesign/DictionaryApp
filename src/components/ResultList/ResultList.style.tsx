@@ -26,12 +26,26 @@ export const ResultListContainer = styled.section`
 		}
 		
 		button {
-			background: transparent;
-			color: ${theme.colors.brandDark.light};
 			border: 0;
 			appearance: none;
-			font-size: 2rem;
-			line-height: 1;
+
+			&[aria-label="previous"],
+			&[aria-label="next"] {
+				background: transparent;
+				color: ${theme.colors.brandDark.light};
+				font-size: 2rem;
+				line-height: 1;
+			
+				&:hover, &:focus {
+					color: ${theme.colors.brandPrimary.base};
+				}
+				
+				&[disabled] {
+					color: ${theme.colors.brandDark.light};
+					opacity: 0.25;
+					pointer-events: none;
+				}
+			}
 				
 			&[aria-label="previous"] {
 				justify-content: flex-start;
@@ -44,16 +58,28 @@ export const ResultListContainer = styled.section`
 				order: 3;
 				margin-right: -40px;
 			}
-			
-			&:hover, &:focus {
-				color: ${theme.colors.brandPrimary.base};
+
+			&[aria-label="slide dot"] {
+				display: block;
+				width: 0.5rem;
+				height: 0.5rem;
+				border-radius: 0.5rem;
+				margin: 2px;
+				background: ${theme.colors.brandDark.light};
+				
+				&[disabled] {
+					background: ${theme.colors.brandPrimary.base};
+				}
 			}
-			
-			&[disabled] {
-				color: ${theme.colors.brandDark.light};
-				opacity: 0.25;
-				pointer-events: none;
-			}
+		}
+		
+		&__dot-group {
+			position: absolute;
+			bottom: 0;
+			left: 0;
+			right: 0;
+			display: flex;
+			justify-content: center;
 		}
 	}
 `;
