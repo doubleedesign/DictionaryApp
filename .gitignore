@@ -25,3 +25,4 @@ yarn-error.log*
 
 # IDE config
 .idea/*
+/package-lock.json
