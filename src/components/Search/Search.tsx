@@ -15,12 +15,7 @@ const theme = {
 	},
 };
 
-export interface SearchProps {
-}
-
-export const Search: React.FC<SearchProps> = function(props: {
-
-	}) {
+export const Search: React.FC = function() {
 	const [liveSearchTerm, setLiveSearchTerm] = useState<string>('');
 	const [submittedSearchTerm, setSubmittedSearchTerm] = useState<string>('');
 	const apiKeyDict = '16a63a57-7277-4843-8034-4285a3b986ee';
