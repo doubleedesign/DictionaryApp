@@ -32,6 +32,16 @@ export const Search: React.FC = function() {
 	}
 
 	/**
+	 * Handle search term being changed externally
+	 * (e.g. passed up from a definition via onSynonymClick prop)
+	 * @param term
+	 */
+	function loadSearchTerm(term: string) {
+		setLiveSearchTerm(term);
+		setSubmittedSearchTerm(term);
+	}
+
+	/**
 	 * When the search form is submitted, recognise the input is now "the term to actually search for"
 	 * by putting it into a different state variable.
 	 * Reason for separating them like this to show appropriate messages,
@@ -106,7 +116,7 @@ export const Search: React.FC = function() {
 	return (
 		<ThemeProvider theme={theme}>
 			<SearchForm onSubmit={handleSearchSubmit}>
-				<TextField labelText="Search for:" placeholder="Enter search term" autoFocus={true} onChange={updateSearchTerm} />
+				<TextField labelText="Search for:" placeholder="Enter search term" autoFocus={true} onChange={updateSearchTerm} value={liveSearchTerm} />
 				<Button variant="dark" onClick={handleSearchSubmit}><CgSearch/></Button>
 				{ submittedSearchTerm && queryRunning ?
 					<Progress indicatorColor="brandPrimary" trackColor="FormControlFilledBg" animationDuration="2s" />
@@ -121,7 +131,8 @@ export const Search: React.FC = function() {
 									word={definition.hwi.hw}
 									type={definition.fl}
 									definitions={definition.shortdef}
-									synonyms={(definition.meta.syns).slice(0,5)}/>
+									synonyms={(definition.meta.syns).slice(0,5)}
+									onSynonymClick={loadSearchTerm}/>
 					))}
 				</ResultList>
 				: null

@@ -1,22 +1,27 @@
 import React from 'react';
-import { Header, List, ListItem, Paragraph } from 'grape-ui-react';
+import { Header, List, ListItem, Paragraph, Button } from 'grape-ui-react';
 import InlineList from '../ui/InlineList/InlineList';
 import { DefinitionCard, DefinitionCardContent } from './Definition.style';
 
 export interface DefinitionProps {
 	word: string,
 	type: string,
-	date?: string,
 	definitions: string[],
-	synonyms: []
+	synonyms: [][],
+	onSynonymClick: (synonym: string) => void;
 }
 
 export const Definition: React.FC<DefinitionProps> = function(props: {
 	word: string,
 	type: string,
 	definitions: string[],
-	synonyms: [][]
+	synonyms: [][],
+	onSynonymClick: (synonym: string) => void;
 }) {
+
+	function searchSynonym(event: { target: { innerHTML: string; }; }) {
+		props.onSynonymClick(event.target.innerHTML);
+	}
 
 	return (
 		<DefinitionCard>
@@ -32,8 +37,10 @@ export const Definition: React.FC<DefinitionProps> = function(props: {
 							{props.synonyms[index] ?
 								<InlineList>
 									{(props.synonyms[index].slice(0,5)).map((synonym, index) => (
-										<ListItem key={index}>{synonym}</ListItem>)
-									)}
+										<ListItem key={index}>
+											<Button onClick={searchSynonym}>{synonym}</Button>
+										</ListItem>
+									))}
 								</InlineList>
 							: null }
 						</ListItem>
