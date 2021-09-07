@@ -120,7 +120,6 @@ export const Search: React.FC = function() {
 						<Definition key={index}
 									word={definition.hwi.hw}
 									type={definition.fl}
-									date={definition.date ? (definition.date).split('{')[0] : null}
 									definitions={definition.shortdef}
 									synonyms={(definition.meta.syns).slice(0,5)}/>
 					))}
