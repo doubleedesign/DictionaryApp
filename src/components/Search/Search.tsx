@@ -19,7 +19,7 @@ export const Search: React.FC = function() {
 	const [liveSearchTerm, setLiveSearchTerm] = useState<string>('');
 	const [submittedSearchTerm, setSubmittedSearchTerm] = useState<string>('');
 	const apiKeyDict = '16a63a57-7277-4843-8034-4285a3b986ee';
-	//const apiKeyThes = '0803c54f-d908-4630-86a1-0e31e656d692';
+	const apiKeyThes = '0803c54f-d908-4630-86a1-0e31e656d692';
 	const [definitions, setDefinitions] = useState<any[]>([]);
 	const [queryRunning, setQueryRunning] = useState<boolean>(false);
 
@@ -47,15 +47,15 @@ export const Search: React.FC = function() {
 	}
 
 	/**
-	 * When the submitted search term changes, do the API query
-	 * and save the definitions to the relevant state variable
+	 * When the submitted search term changes, do the API queries
+	 * and save the definitions and synonyms to the relevant state variables
 	 */
 	useEffect(() => {
 
 		// setQueryRunning to true to show the loading state
 		setQueryRunning(true);
 
-		// Run the query using getDefinitions function
+		// Run definitions query
 		getDefinitions(submittedSearchTerm).then(definitions => {
 
 			// When getDefinitions returns something, wait half a second before proceeding
@@ -69,18 +69,22 @@ export const Search: React.FC = function() {
 				setQueryRunning(false);
 			})
 		})
+
+
 	}, [submittedSearchTerm]);
 
 
 	/**
-	 * The function to get definitions from the API
+	 * The function to get data from the API
+	 * (The thesaurus API gets basic definition data as well as the synonyms, so just using the one query)
 	 * @param term
 	 */
 	async function getDefinitions(term: string) {
-		const query = `https://www.dictionaryapi.com/api/v3/references/collegiate/json/${term}?key=${apiKeyDict}`;
+		const query = `https://www.dictionaryapi.com/api/v3/references/thesaurus/json/${term}?key=${apiKeyThes}`;
 
 		return axios.get(query)
 			.then(response => {
+				console.log(response);
 				return response.data;
 			})
 			.catch(error => {
@@ -117,7 +121,8 @@ export const Search: React.FC = function() {
 									word={definition.hwi.hw}
 									type={definition.fl}
 									date={definition.date ? (definition.date).split('{')[0] : null}
-									definitions={definition.shortdef}/>
+									definitions={definition.shortdef}
+									synonyms={(definition.meta.syns).slice(0,5)}/>
 					))}
 				</ResultList>
 				: null

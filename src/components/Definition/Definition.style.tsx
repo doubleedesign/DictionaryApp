@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Card, getGlobalStyles, Header, List } from "grape-ui-react";
+import { Card, getGlobalStyles, Header, List, Paragraph } from "grape-ui-react";
 const theme = getGlobalStyles();
 //console.log(theme);
 
@@ -18,5 +18,9 @@ export const DefinitionCardContent = styled(Card)`
 	${List.ol} {
 		padding-left: 1rem;
 		margin-bottom: 0;
+	}
+	
+	${Paragraph} {
+		margin-bottom: 0.5rem;
 	}
 `;
