@@ -94,7 +94,6 @@ export const Search: React.FC = function() {
 
 		return axios.get(query)
 			.then(response => {
-				console.log(response);
 				return response.data;
 			})
 			.catch(error => {
@@ -118,10 +117,12 @@ export const Search: React.FC = function() {
 			<SearchForm onSubmit={handleSearchSubmit}>
 				<TextField labelText="Search for:" placeholder="Enter search term" autoFocus={true} onChange={updateSearchTerm} value={liveSearchTerm} />
 				<Button variant="dark" onClick={handleSearchSubmit}><CgSearch/></Button>
-				{ submittedSearchTerm && queryRunning ?
-					<Progress indicatorColor="brandPrimary" trackColor="FormControlFilledBg" animationDuration="2s" />
-					: <Progress total={10} value={0} trackColor="brandLight" />
-				}
+				<div className="progressWrapper">
+					{ submittedSearchTerm && queryRunning ?
+						<Progress indicatorColor="brandPrimary" trackColor="FormControlFilledBg" animationDuration="2s" />
+						: <Progress total={10} value={0} trackColor="brandLight" />
+					}
+				</div>
 			</SearchForm>
 			{ /* If a search term has been submitted and returned definition objects, show definition cards  */ }
 			{submittedSearchTerm && !queryRunning && definitions && (typeof definitions[0] == 'object') ?

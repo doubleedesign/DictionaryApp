@@ -38,7 +38,7 @@ export const Definition: React.FC<DefinitionProps> = function(props: {
 								<InlineList>
 									{(props.synonyms[index].slice(0,5)).map((synonym, index) => (
 										<ListItem key={index}>
-											<Button onClick={searchSynonym}>{synonym}</Button>
+											<Button sm onClick={searchSynonym}>{synonym}</Button>
 										</ListItem>
 									))}
 								</InlineList>

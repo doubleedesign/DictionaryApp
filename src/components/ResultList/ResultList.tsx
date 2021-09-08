@@ -10,6 +10,7 @@ export const ResultList: React.FC<PropsWithChildren<{}>> = ({ children }) => {
 			<CarouselProvider
 				naturalSlideWidth={100}
 				naturalSlideHeight={40}
+				isIntrinsicHeight={true}
 				totalSlides={React.Children.count(children)}
 			>
 				<Slider>

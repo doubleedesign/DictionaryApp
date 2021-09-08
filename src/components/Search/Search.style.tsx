@@ -1,6 +1,5 @@
 import styled from 'styled-components';
 import { Form, Button, getGlobalStyles, Progress } from "grape-ui-react";
-
 const theme = getGlobalStyles();
 
 export const SearchForm = styled(Form)`
@@ -8,11 +7,11 @@ export const SearchForm = styled(Form)`
 	margin: 2rem auto 1rem auto;
 	position: relative;
 	
-	${Progress} {
+	.progressWrapper { // hack because ${Progress} doesn't work here
 		position: absolute;
 		bottom: 17px;
 		left: 1px;
-		right: 1px;
+		right: 1px;	
 	}
 	
 	${Button} {
