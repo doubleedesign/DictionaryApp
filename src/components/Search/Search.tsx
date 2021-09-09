@@ -7,6 +7,7 @@ import { CgSearch } from 'react-icons/cg';
 import ResultList from '../ResultList/ResultList';
 import Definition from '../Definition/Definition';
 import Message from '../Message/Message';
+import Gallery from '../Gallery/Gallery';
 import 'pure-react-carousel/dist/react-carousel.es.css';
 
 const theme = {
@@ -20,7 +21,9 @@ export const Search: React.FC = function() {
 	const [submittedSearchTerm, setSubmittedSearchTerm] = useState<string>('');
 	const apiKeyDict = '16a63a57-7277-4843-8034-4285a3b986ee';
 	const apiKeyThes = '0803c54f-d908-4630-86a1-0e31e656d692';
+	const apiKeyImages = 'wXyDQXrTFTAwuxLgBTDEZnzB4-euefC31caZoskUe9A';
 	const [definitions, setDefinitions] = useState<any[]>([]);
+	const [images, setImages] = useState<any[]>([]);
 	const [queryRunning, setQueryRunning] = useState<boolean>(false);
 
 	/**
@@ -65,32 +68,45 @@ export const Search: React.FC = function() {
 		// setQueryRunning to true to show the loading state
 		setQueryRunning(true);
 
-		// Run definitions query
+		// Run definitions query followed by images query
+		// and save the results to the relevant state variables
 		getDefinitions(submittedSearchTerm).then(definitions => {
+			setDefinitions(definitions.slice(0, 3));
 
-			// When getDefinitions returns something, wait half a second before proceeding
-			// to ensure loading state always shows
-			delay(500).then(function() {
-
-				// Save the definitions to the state variable
-				setDefinitions(definitions.slice(0, 3));
-
-				// setQueryRunning to false so the loading state disappears
-				setQueryRunning(false);
+			getImages(submittedSearchTerm).then(images => {
+				setImages(images.results.slice(0,5));
 			})
 		})
-
+		.finally(() => {
+			setQueryRunning(false);
+		})
 
 	}, [submittedSearchTerm]);
 
 
 	/**
-	 * The function to get data from the API
+	 * The function to get word data from the Merriam-Webster API
 	 * (The thesaurus API gets basic definition data as well as the synonyms, so just using the one query)
 	 * @param term
 	 */
 	async function getDefinitions(term: string) {
 		const query = `https://www.dictionaryapi.com/api/v3/references/thesaurus/json/${term}?key=${apiKeyThes}`;
+
+		return axios.get(query)
+			.then(response => {
+				return response.data;
+			})
+			.catch(error => {
+				console.log(error);
+			})
+	}
+
+	/**
+	 * The function to get images from the Unsplash API
+	 * @param term
+	 */
+	async function getImages(term: string) {
+		const query = `https://api.unsplash.com/search/photos?page=1&query=${term}&client_id=${apiKeyImages}`;
 
 		return axios.get(query)
 			.then(response => {
@@ -124,6 +140,10 @@ export const Search: React.FC = function() {
 					}
 				</div>
 			</SearchForm>
+
+			{ /* If a search term has been submitted and returned images, show them */ }
+			{submittedSearchTerm && !queryRunning && images ? <Gallery images={images}/> : null }
+
 			{ /* If a search term has been submitted and returned definition objects, show definition cards  */ }
 			{submittedSearchTerm && !queryRunning && definitions && (typeof definitions[0] == 'object') ?
 				<ResultList>
