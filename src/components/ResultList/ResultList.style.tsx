@@ -4,10 +4,12 @@ const theme = getGlobalStyles();
 
 export const ResultListContainer = styled.section`
 	max-width: 37.5rem;
-	margin: 0 auto 2rem auto;
+	margin: -5rem auto 2rem;
 	position: relative;
 	
 	.carousel {
+		background: white;
+		border-radius: 0.25rem;
 		display: flex;
 		flex-wrap: nowrap;
 		align-items: center;
@@ -21,6 +23,7 @@ export const ResultListContainer = styled.section`
 			.carousel__inner-slide {
 				display: flex;
 				align-items: center;
+				min-height: 225px;
 			}
 		}
 		
@@ -61,7 +64,7 @@ export const ResultListContainer = styled.section`
 			&[aria-label="slide dot"] {
 				display: block;
 				width: 0.5rem;
-				height: 0.5rem;
+				height: 0.75rem;
 				border-radius: 0.5rem;
 				margin: 2px;
 				background: ${theme.colors.brandDark.light};

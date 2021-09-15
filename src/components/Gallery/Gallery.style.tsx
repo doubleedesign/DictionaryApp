@@ -3,7 +3,7 @@ import styled from 'styled-components';
 export const ImageGrid = styled.section`
 	display: flex;
 	flex-wrap: nowrap;
-	margin-bottom: 2rem;
+	margin-top: 1rem;
 `;
 
 export const ImageItem = styled.div`

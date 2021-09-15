@@ -9,6 +9,7 @@ import Definition from '../Definition/Definition';
 import Message from '../Message/Message';
 import Gallery from '../Gallery/Gallery';
 import 'pure-react-carousel/dist/react-carousel.es.css';
+import Banner from "../Banner/Banner";
 
 const theme = {
 	buttons: {
@@ -23,6 +24,7 @@ export const Search: React.FC = function() {
 	const apiKeyThes = '0803c54f-d908-4630-86a1-0e31e656d692';
 	const apiKeyImages = 'wXyDQXrTFTAwuxLgBTDEZnzB4-euefC31caZoskUe9A';
 	const [definitions, setDefinitions] = useState<any[]>([]);
+	const [bannerImage, setBannerImage] = useState<string>("");
 	const [images, setImages] = useState<any[]>([]);
 	const [queryRunning, setQueryRunning] = useState<boolean>(false);
 
@@ -74,7 +76,11 @@ export const Search: React.FC = function() {
 			setDefinitions(definitions.slice(0, 3));
 
 			getImages(submittedSearchTerm).then(images => {
-				setImages(images.results.slice(0,5));
+				setImages(images.results.slice(1,6));
+
+				if(images.results[0]) {
+					setBannerImage(images.results[0].urls.full);
+				}
 			})
 		})
 		.finally(() => {
@@ -130,19 +136,19 @@ export const Search: React.FC = function() {
 	 */
 	return (
 		<ThemeProvider theme={theme}>
-			<SearchForm onSubmit={handleSearchSubmit}>
-				<TextField labelText="Search for:" placeholder="Enter search term" autoFocus={true} onChange={updateSearchTerm} value={liveSearchTerm} />
-				<Button variant="dark" onClick={handleSearchSubmit}><CgSearch/></Button>
-				<div className="progressWrapper">
-					{ submittedSearchTerm && queryRunning ?
-						<Progress indicatorColor="brandPrimary" trackColor="FormControlFilledBg" animationDuration="2s" />
-						: <Progress total={10} value={0} trackColor="brandLight" />
-					}
-				</div>
-			</SearchForm>
 
-			{ /* If a search term has been submitted and returned images, show them */ }
-			{submittedSearchTerm && !queryRunning && images ? <Gallery images={images}/> : null }
+			<Banner imageURL={bannerImage ? bannerImage : ""}>
+				<SearchForm onSubmit={handleSearchSubmit}>
+					<TextField labelText="Search for:" placeholder="Enter search term" autoFocus={true} onChange={updateSearchTerm} value={liveSearchTerm} />
+					<Button variant="dark" onClick={handleSearchSubmit}><CgSearch/></Button>
+					<div className="progressWrapper">
+						{ submittedSearchTerm && queryRunning ?
+							<Progress indicatorColor="brandPrimary" trackColor="FormControlFilledBg" animationDuration="2s" />
+							: <Progress total={10} value={0} trackColor="brandLight" />
+						}
+					</div>
+				</SearchForm>
+			</Banner>
 
 			{ /* If a search term has been submitted and returned definition objects, show definition cards  */ }
 			{submittedSearchTerm && !queryRunning && definitions && (typeof definitions[0] == 'object') ?
@@ -169,7 +175,7 @@ export const Search: React.FC = function() {
 			}
 			{ /* If a search term has been submitted and query run but there were no valid definitions, show an error */ }
 			{ submittedSearchTerm && !queryRunning && (!definitions || typeof definitions[0] !== 'object') ?
-				<Message color="brandDanger" text="Nothing found"/>
+				<Message color="brandDanger" text="Not found in dictionary"/>
 				: null
 			}
 			{ /* If there is no submitted search term, show a prompt */ }
@@ -177,6 +183,10 @@ export const Search: React.FC = function() {
 				<Message color="brandSuccess" text="Please enter a search term"/>
 				: null
 			}
+
+			{ /* If a search term has been submitted and returned images, show them */ }
+			{submittedSearchTerm && !queryRunning && images ? <Gallery images={images}/> : null }
+
 		</ThemeProvider>
 	)
 }

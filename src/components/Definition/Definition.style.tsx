@@ -4,6 +4,11 @@ const theme = getGlobalStyles();
 
 export const DefinitionCard = styled.article`
 	width: 100%;
+	height: 100%;
+	
+	> div {
+		border: 0;
+	}
 `;
 
 export const DefinitionCardContent = styled(Card)`
