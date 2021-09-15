@@ -124,20 +124,12 @@ export const Search: React.FC = function() {
 	}
 
 	/**
-	 * Utility function to add a delay before doing something
-	 * @param milliseconds
-	 */
-	async function delay(milliseconds: number) {
-		return new Promise(response => setTimeout(response, milliseconds));
-	}
-
-	/**
 	 * Component output
 	 */
 	return (
 		<ThemeProvider theme={theme}>
 
-			<Banner imageURL={bannerImage ? bannerImage : ""}>
+			<Banner imageURL={bannerImage ? bannerImage : ""} isResults={(definitions.length > 0) ? true : false}>
 				<SearchForm onSubmit={handleSearchSubmit}>
 					<TextField labelText="Search for:" placeholder="Enter search term" autoFocus={true} onChange={updateSearchTerm} value={liveSearchTerm} />
 					<Button variant="dark" onClick={handleSearchSubmit}><CgSearch/></Button>
