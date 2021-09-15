@@ -24,6 +24,7 @@ export const Search: React.FC = function() {
 	const apiKeyThes = '0803c54f-d908-4630-86a1-0e31e656d692';
 	const apiKeyImages = 'wXyDQXrTFTAwuxLgBTDEZnzB4-euefC31caZoskUe9A';
 	const [definitions, setDefinitions] = useState<any[]>([]);
+	const [hasResults, setHasResults] = useState<boolean>(false);
 	const [bannerImage, setBannerImage] = useState<string>("https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwyNTk0NTl8MHwxfHNlYXJjaHw2fHxib29rc3xlbnwwfHx8fDE2MzE2NzkzMDY&ixlib=rb-1.2.1&q=80&w=1920");
 	const [images, setImages] = useState<any[]>([]);
 	const [queryRunning, setQueryRunning] = useState<boolean>(false);
@@ -89,6 +90,18 @@ export const Search: React.FC = function() {
 
 	}, [submittedSearchTerm]);
 
+	/**
+	 * Set the hasResults boolean according to whether the current definitions are objects or not
+	 */
+	useEffect(() => {
+		if(!definitions || typeof definitions[0] !== 'object') {
+			setHasResults(false);
+		}
+		else {
+			setHasResults(true);
+		}
+	}, [definitions]);
+
 
 	/**
 	 * The function to get word data from the Merriam-Webster API
@@ -129,7 +142,7 @@ export const Search: React.FC = function() {
 	return (
 		<ThemeProvider theme={theme}>
 
-			<Banner imageURL={bannerImage ? bannerImage : ""} isResults={(definitions.length > 0) ? true : false}>
+			<Banner imageURL={bannerImage ? bannerImage : ""} hasResults={hasResults}>
 				<SearchForm onSubmit={handleSearchSubmit}>
 					<TextField labelText="Search for:" placeholder="Enter search term" autoFocus={true} onChange={updateSearchTerm} value={liveSearchTerm} />
 					<Button variant="dark" onClick={handleSearchSubmit}><CgSearch/></Button>

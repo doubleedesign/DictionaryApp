@@ -5,13 +5,17 @@ const theme = getGlobalStyles();
 export const BannerBox = styled.section`
 	background-color: #222;
 	height: 50vh;
-	padding: 1rem 1rem 4rem;
+	padding: 1rem;
 	margin-bottom: 1rem;
 	background-size: cover;
 	background-position: center center;
 	display: flex;
 	align-items: flex-end;
 	position: relative;
+	
+	&[data-results=true] {
+		padding: 1rem 1rem 4rem;
+	}
 	
 	&:before {
 		content: '';
