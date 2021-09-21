@@ -20,9 +20,9 @@ const theme = {
 export const Search: React.FC = function() {
 	const [liveSearchTerm, setLiveSearchTerm] = useState<string>('');
 	const [submittedSearchTerm, setSubmittedSearchTerm] = useState<string>('');
-	const apiKeyDict = '16a63a57-7277-4843-8034-4285a3b986ee';
-	const apiKeyThes = '0803c54f-d908-4630-86a1-0e31e656d692';
-	const apiKeyImages = 'wXyDQXrTFTAwuxLgBTDEZnzB4-euefC31caZoskUe9A';
+	const apiKeyDict = '';
+	const apiKeyThes = '';
+	const apiKeyImages = '';
 	const [definitions, setDefinitions] = useState<any[]>([]);
 	const [hasResults, setHasResults] = useState<boolean>(false);
 	const [bannerImage, setBannerImage] = useState<string>("https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwyNTk0NTl8MHwxfHNlYXJjaHw2fHxib29rc3xlbnwwfHx8fDE2MzE2NzkzMDY&ixlib=rb-1.2.1&q=80&w=1920");
